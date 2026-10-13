@@ -24,7 +24,7 @@ class ServerSwipeControl(context: Context) : View(context) {
     private val arrowPath = Path()
     private val bounds = RectF()
     private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = 0xFFF7F7FF.toInt()
+        color = 0xFFF8FAFF.toInt()
         textAlign = Paint.Align.CENTER
         typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
     }
@@ -113,7 +113,7 @@ class ServerSwipeControl(context: Context) : View(context) {
 
         paint.color = 0x35FFFFFF
         canvas.drawCircle(thumbX, centerY, thumbRadius + dp(3f), paint)
-        paint.color = 0xFFF6F5FF.toInt()
+        paint.color = 0xFFF8FAFF.toInt()
         canvas.drawCircle(thumbX, centerY, thumbRadius, paint)
 
         arrowPaint.color = colors.last()
@@ -204,11 +204,11 @@ class ServerSwipeControl(context: Context) : View(context) {
     }
 
     private fun stateColors(): IntArray = if (actionPending) {
-        intArrayOf(0xFF9B6519.toInt(), 0xFF7C4F11.toInt())
+        intArrayOf(0xFFB9781D.toInt(), 0xFF8D5813.toInt())
     } else when (serverState) {
-        ServerRuntime.State.RUNNING -> intArrayOf(0xFF187B5B.toInt(), 0xFF116044.toInt())
-        ServerRuntime.State.STARTING -> intArrayOf(0xFF9B6519.toInt(), 0xFF7C4F11.toInt())
-        ServerRuntime.State.ERROR -> intArrayOf(0xFFB83D49.toInt(), 0xFF8F2D39.toInt())
-        ServerRuntime.State.STOPPED -> intArrayOf(0xFF137B77.toInt(), 0xFF0F6663.toInt())
+        ServerRuntime.State.RUNNING -> intArrayOf(0xFF1B9876.toInt(), 0xFF11765B.toInt())
+        ServerRuntime.State.STARTING -> intArrayOf(0xFFB9781D.toInt(), 0xFF8D5813.toInt())
+        ServerRuntime.State.ERROR -> intArrayOf(0xFFD24D63.toInt(), 0xFFA9384C.toInt())
+        ServerRuntime.State.STOPPED -> intArrayOf(0xFF4568F5.toInt(), 0xFF344FC7.toInt())
     }
 }

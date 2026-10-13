@@ -44,20 +44,21 @@ import java.util.Locale
 
 class MainActivity : Activity() {
 
-    // Max Share design tokens follow the phone's light/dark appearance.
+    // Max Share "signal" design system follows the phone's light/dark appearance.
     private val isDarkMode: Boolean
         get() = (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
             android.content.res.Configuration.UI_MODE_NIGHT_YES
-    private val cBg: Int get() = if (isDarkMode) 0xFF10191B.toInt() else 0xFFF4F7F7.toInt()
-    private val cCard: Int get() = if (isDarkMode) 0xFF182426.toInt() else 0xFFFFFFFF.toInt()
-    private val cField: Int get() = if (isDarkMode) 0xFF202E30.toInt() else 0xFFEDF3F2.toInt()
-    private val cText: Int get() = if (isDarkMode) 0xFFEFF7F6.toInt() else 0xFF15272B.toInt()
-    private val cSub: Int get() = if (isDarkMode) 0xFFA5B6B5.toInt() else 0xFF607276.toInt()
-    private val cPrimary: Int get() = if (isDarkMode) 0xFF74C9BD.toInt() else 0xFF137B77.toInt()
-    private val cOk = 0xFF187B5B.toInt()
-    private val cWarn = 0xFFA36613.toInt()
-    private val cErr = 0xFFB83D49.toInt()
-    private val cBorder: Int get() = if (isDarkMode) 0xFF2B3B3D.toInt() else 0xFFDCE6E4.toInt()
+    private val cBg: Int get() = if (isDarkMode) 0xFF0B1220.toInt() else 0xFFF4F6FB.toInt()
+    private val cCard: Int get() = if (isDarkMode) 0xFF141F33.toInt() else 0xFFFFFFFF.toInt()
+    private val cField: Int get() = if (isDarkMode) 0xFF1C2A41.toInt() else 0xFFEEF2F8.toInt()
+    private val cText: Int get() = if (isDarkMode) 0xFFF4F7FC.toInt() else 0xFF15213A.toInt()
+    private val cSub: Int get() = if (isDarkMode) 0xFFA7B4CB.toInt() else 0xFF65738B.toInt()
+    private val cPrimary: Int get() = if (isDarkMode) 0xFF91AAFF.toInt() else 0xFF4568F5.toInt()
+    private val cOk = 0xFF1B9876.toInt()
+    private val cWarn = 0xFFB9781D.toInt()
+    private val cErr = 0xFFD24D63.toInt()
+    private val cBorder: Int get() = if (isDarkMode) 0xFF2B3B55.toInt() else 0xFFDFE5EF.toInt()
+    private val cAccentSoft: Int get() = if (isDarkMode) 0xFF1D2E4A.toInt() else 0xFFEAF0FF.toInt()
 
     private lateinit var prefs: PrefsManager
     private val ui = Handler(Looper.getMainLooper())
@@ -131,31 +132,48 @@ class MainActivity : Activity() {
         orientation = LinearLayout.VERTICAL
         background = GradientDrawable().apply {
             setColor(cCard)
-            cornerRadius = dp(20).toFloat()
+            cornerRadius = dp(22).toFloat()
             setStroke(dp(1), cBorder)
         }
-        setPadding(dp(16), dp(16), dp(16), dp(16))
+        setPadding(dp(18), dp(18), dp(18), dp(18))
         layoutParams = lp(bottom = 12)
+        elevation = dp(2).toFloat()
     }
 
     private fun heading(t: String) = TextView(this).apply {
         text = t
-        textSize = 16f
+        textSize = 17f
         setTextColor(cText)
         typeface = android.graphics.Typeface.DEFAULT_BOLD
-        setPadding(0, 0, 0, dp(8))
+        setPadding(0, 0, 0, dp(9))
     }
 
     private fun small(t: String) = TextView(this).apply {
         text = t
-        textSize = 12f
+        textSize = 12.5f
         setTextColor(cSub)
+    }
+
+    private fun pageIntro(title: String, subtitle: String) = LinearLayout(this).apply {
+        orientation = LinearLayout.VERTICAL
+        setPadding(dp(2), dp(2), dp(2), dp(5))
+        addView(TextView(this@MainActivity).apply {
+            text = title
+            textSize = 25f
+            setTextColor(cText)
+            typeface = android.graphics.Typeface.create("sans-serif", android.graphics.Typeface.BOLD)
+        })
+        addView(small(subtitle).apply {
+            textSize = 13f
+            setPadding(0, dp(5), 0, 0)
+            setLineSpacing(dp(2).toFloat(), 1f)
+        })
     }
 
     private fun buttonShape(color: Int, filled: Boolean): GradientDrawable {
         return GradientDrawable().apply {
-            setColor(if (filled) color else cField)
-            cornerRadius = dp(12).toFloat()
+            setColor(if (filled) color else cAccentSoft)
+            cornerRadius = dp(15).toFloat()
             setStroke(dp(1), if (filled) color else cBorder)
         }
     }
@@ -164,33 +182,32 @@ class MainActivity : Activity() {
         text = t
         isAllCaps = false
         textSize = 14f
-        setTextColor(if (filled) {
-            if (isDarkMode) 0xFF103330.toInt() else 0xFFFFFFFF.toInt()
-        } else color)
+        setTextColor(if (filled) 0xFFFFFFFF.toInt() else cText)
         letterSpacing = 0.01f
+        typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
         background = RippleDrawable(
-            ColorStateList.valueOf(0x44FFFFFF),
+            ColorStateList.valueOf(if (filled) 0x33FFFFFF else 0x18000000),
             buttonShape(color, filled),
             buttonShape(0xFFFFFFFF.toInt(), true)
         )
         backgroundTintList = null
         setPadding(dp(14), dp(8), dp(14), dp(8))
-        minHeight = dp(44)
+        minHeight = dp(48)
         stateListAnimator = null
-        elevation = 0f
+        elevation = if (filled) dp(1).toFloat() else 0f
         setOnClickListener { onClick() }
     }
 
     private fun metric(title: String, value: TextView, total: TextView): LinearLayout =
         LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            background = rounded(cField, 14)
+            background = rounded(cAccentSoft, 16)
             setPadding(dp(12), dp(12), dp(12), dp(12))
             addView(small(title))
-            value.textSize = 19f
+            value.textSize = 20f
             value.setTextColor(cText)
             value.typeface = android.graphics.Typeface.DEFAULT_BOLD
-            addView(value, lp(top = 4))
+            addView(value, lp(top = 6))
             total.textSize = 11f
             total.setTextColor(cSub)
             addView(total, lp(top = 2))
@@ -207,7 +224,11 @@ class MainActivity : Activity() {
         listOf(homeTabItem, shareTabItem, statsTabItem, settingsTabItem).forEachIndexed { index, item ->
             val selected = index == active
             item.setTextColor(if (selected) cPrimary else cSub)
-            item.background = if (selected) rounded(cField, 12) else null
+            item.typeface = android.graphics.Typeface.create(
+                "sans-serif",
+                if (selected) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL
+            )
+            item.background = if (selected) rounded(cAccentSoft, 16) else null
         }
         if (::drawerOverlay.isInitialized) drawerOverlay.visibility = View.GONE
     }
@@ -226,7 +247,7 @@ class MainActivity : Activity() {
 
     private fun showExtraPage(title: String, content: LinearLayout.() -> Unit) {
         extraContent.removeAllViews()
-        extraContent.addView(heading(title), lp(bottom = 8))
+        extraContent.addView(pageIntro(title, "مركز الأدلة والمعلومات في Max Share"), lp(bottom = 14))
         extraContent.content()
         showSecondaryPage(extraScroll)
     }
@@ -255,7 +276,7 @@ class MainActivity : Activity() {
         val panel = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
-            setPadding(dp(18), dp(18), dp(18), dp(12))
+            setPadding(dp(18), dp(22), dp(18), dp(14))
             setBackgroundColor(cBg)
             isClickable = true
         }
@@ -263,6 +284,8 @@ class MainActivity : Activity() {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
             layoutDirection = View.LAYOUT_DIRECTION_RTL
+            background = rounded(cCard, 20)
+            setPadding(dp(12), dp(12), dp(12), dp(12))
         }
         val icon = ImageView(this).apply {
             setImageResource(com.portablefileserver.R.drawable.max_share_icon)
@@ -294,8 +317,9 @@ class MainActivity : Activity() {
                 textSize = 14f
                 setTextColor(cText)
                 gravity = Gravity.CENTER_VERTICAL
-                setPadding(dp(14), dp(13), dp(14), dp(13))
-                background = rounded(cCard, 13)
+                setPadding(dp(15), dp(15), dp(15), dp(15))
+                minHeight = dp(52)
+                background = rounded(cCard, 16)
                 isClickable = true
                 isFocusable = true
                 setOnClickListener { action() }
@@ -444,8 +468,9 @@ class MainActivity : Activity() {
         textSize = 16f
         setTextColor(cText)
         setHintTextColor(cSub)
-        background = rounded(cField, 10)
-        setPadding(dp(12), dp(10), dp(12), dp(10))
+        background = rounded(cField, 14)
+        setPadding(dp(14), dp(12), dp(14), dp(12))
+        minHeight = dp(50)
         if (number) inputType = InputType.TYPE_CLASS_NUMBER
     }
 
@@ -459,10 +484,12 @@ class MainActivity : Activity() {
         isChecked = checked
         textSize = 14f
         setTextColor(cText)
-        setPadding(0, dp(8), 0, dp(8))
+        setPadding(dp(13), dp(8), dp(13), dp(8))
+        minHeight = dp(52)
+        background = rounded(cField, 15)
         val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
-        thumbTintList = ColorStateList(states, intArrayOf(cOk, 0xFF8790AA.toInt()))
-        trackTintList = ColorStateList(states, intArrayOf(0x773AD6A4, 0x55434D66))
+        thumbTintList = ColorStateList(states, intArrayOf(cOk, 0xFF8793A8.toInt()))
+        trackTintList = ColorStateList(states, intArrayOf(0x7738C9A1, 0x55434D66))
     }
 
     /** صف معلومات: عنوان صغير + قيمة قابلة للتحديد + زر نسخ. */
@@ -470,7 +497,8 @@ class MainActivity : Activity() {
         val row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
-            setPadding(0, dp(6), 0, dp(6))
+            background = rounded(cField, 15)
+            setPadding(dp(12), dp(8), dp(8), dp(8))
         }
         val col = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         col.addView(small(label))
@@ -550,41 +578,42 @@ class MainActivity : Activity() {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER
             layoutDirection = View.LAYOUT_DIRECTION_RTL
-            setPadding(dp(12), dp(7), dp(12), dp(7))
-            background = rounded(cCard, 18)
+            setPadding(dp(9), dp(8), dp(9), dp(8))
+            background = rounded(cCard, 22)
+            elevation = dp(6).toFloat()
         }
         homeTabItem = TextView(this).apply {
             text = "الرئيسية"
-            textSize = 12f
+            textSize = 11.5f
             gravity = Gravity.CENTER
-            setPadding(0, dp(6), 0, dp(6))
+            setPadding(dp(3), dp(8), dp(3), dp(8))
             setOnClickListener { selectTab(0) }
         }
         shareTabItem = TextView(this).apply {
             text = "الشبكة"
-            textSize = 12f
+            textSize = 11.5f
             gravity = Gravity.CENTER
-            setPadding(0, dp(6), 0, dp(6))
+            setPadding(dp(3), dp(8), dp(3), dp(8))
             setOnClickListener { selectTab(1) }
         }
         statsTabItem = TextView(this).apply {
             text = "النشاط"
-            textSize = 12f
+            textSize = 11.5f
             gravity = Gravity.CENTER
-            setPadding(0, dp(6), 0, dp(6))
+            setPadding(dp(3), dp(8), dp(3), dp(8))
             setOnClickListener { selectTab(2) }
         }
         settingsTabItem = TextView(this).apply {
             text = "الإعدادات"
-            textSize = 12f
+            textSize = 11.5f
             gravity = Gravity.CENTER
-            setPadding(0, dp(6), 0, dp(6))
+            setPadding(dp(3), dp(8), dp(3), dp(8))
             setOnClickListener { selectTab(3) }
         }
-        nav.addView(homeTabItem, LinearLayout.LayoutParams(0, dp(54), 1f))
-        nav.addView(shareTabItem, LinearLayout.LayoutParams(0, dp(54), 1f))
-        nav.addView(statsTabItem, LinearLayout.LayoutParams(0, dp(54), 1f))
-        nav.addView(settingsTabItem, LinearLayout.LayoutParams(0, dp(54), 1f))
+        nav.addView(homeTabItem, LinearLayout.LayoutParams(0, dp(52), 1f))
+        nav.addView(shareTabItem, LinearLayout.LayoutParams(0, dp(52), 1f))
+        nav.addView(statsTabItem, LinearLayout.LayoutParams(0, dp(52), 1f))
+        nav.addView(settingsTabItem, LinearLayout.LayoutParams(0, dp(52), 1f))
         root.addView(nav, LinearLayout.LayoutParams(-1, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
             setMargins(dp(16), dp(4), dp(16), dp(10))
         })
@@ -600,14 +629,14 @@ class MainActivity : Activity() {
             isFocusable = true
             setOnClickListener { drawerOverlay.visibility = View.VISIBLE }
         }
-        header.addView(menuButton, LinearLayout.LayoutParams(dp(42), dp(42)).apply { marginEnd = dp(8) })
+        header.addView(menuButton, LinearLayout.LayoutParams(dp(44), dp(44)).apply { marginEnd = dp(8) })
         val logo = ImageView(this).apply {
             setImageResource(com.portablefileserver.R.drawable.max_share_icon)
             scaleType = ImageView.ScaleType.CENTER_CROP
             background = rounded(cField, 16)
             clipToOutline = true
         }
-        header.addView(logo, LinearLayout.LayoutParams(dp(54), dp(54)).apply { marginEnd = dp(12) })
+        header.addView(logo, LinearLayout.LayoutParams(dp(50), dp(50)).apply { marginEnd = dp(12) })
         val titles = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         titles.addView(TextView(this).apply {
             text = getString(com.portablefileserver.R.string.app_name); textSize = 20f; setTextColor(cText)
@@ -618,7 +647,8 @@ class MainActivity : Activity() {
         pill = TextView(this).apply {
             textSize = 12f
             setTextColor(0xFFFFFFFF.toInt())
-            setPadding(dp(12), dp(5), dp(12), dp(5))
+            typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+            setPadding(dp(13), dp(7), dp(13), dp(7))
         }
         header.addView(pill)
         col.addView(header, lp(bottom = 12))
@@ -638,6 +668,8 @@ class MainActivity : Activity() {
 
         // زر التشغيل الرئيسي + رسالة الحالة
         val main = card()
+        main.addView(heading("ابدأ المشاركة"), lp(bottom = 1))
+        main.addView(small("أنشئ شبكة محلية خاصة وانقل ملفاتك مباشرة، بلا سحابة."), lp(bottom = 12))
         btnMain = ServerSwipeControl(this).apply { onAction = { toggle() } }
         main.addView(btnMain, LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(78)))
         tvStatusMsg = TextView(this).apply { textSize = 13f; setTextColor(cSub); gravity = Gravity.CENTER; setPadding(0, dp(8), 0, 0) }
@@ -666,8 +698,7 @@ class MainActivity : Activity() {
             LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f).apply { marginEnd = dp(6) })
         metrics.addView(metric("رفع من الأجهزة", tvReceivedRate, tvReceivedTotal),
             LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f).apply { marginStart = dp(6) })
-        statsCol.addView(heading("نشاط النقل"), lp(bottom = 4))
-        statsCol.addView(small("الإحصاءات المباشرة للجلسة الحالية."), lp(bottom = 12))
+        statsCol.addView(pageIntro("نشاط النقل", "معدلات النقل وحالة الأجهزة في الجلسة الحالية."), lp(bottom = 14))
         statsCol.addView(metrics, lp(bottom = 12))
         val statsCard = card()
         statsCard.addView(heading("حالة الطلبات والأجهزة"))
@@ -682,13 +713,24 @@ class MainActivity : Activity() {
 
         // بطاقة الاتصال (تظهر عند التشغيل)
         runCard = card().apply { visibility = View.GONE }
-        shareCol.addView(heading("الشبكة والاتصال"), lp(bottom = 4))
-        shareCol.addView(small("امسح رمز QR أو انسخ بيانات الشبكة لربط الجهاز الآخر."), lp(bottom = 12))
+        shareCol.addView(pageIntro("الشبكة والاتصال", "اربط الجهاز الآخر عبر QR أو بيانات الاتصال."), lp(bottom = 14))
         shareIdleCard = infoCard("المشاركة متوقفة", "ابدأ الخادم من صفحة الرئيسية حتى تظهر بيانات الشبكة ورمز QR.")
         shareCol.addView(shareIdleCard)
         runCard.addView(heading("بيانات الاتصال"))
         ivQr = ImageView(this)
-        runCard.addView(ivQr, LinearLayout.LayoutParams(dp(220), dp(220)).apply { gravity = Gravity.CENTER_HORIZONTAL })
+        val qrPlate = FrameLayout(this).apply {
+            background = GradientDrawable().apply {
+                setColor(0xFFFFFFFF.toInt())
+                cornerRadius = dp(22).toFloat()
+            }
+            setPadding(dp(10), dp(10), dp(10), dp(10))
+        }
+        qrPlate.addView(ivQr, FrameLayout.LayoutParams(dp(220), dp(220), Gravity.CENTER))
+        runCard.addView(qrPlate, LinearLayout.LayoutParams(dp(244), dp(244)).apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+            topMargin = dp(4)
+            bottomMargin = dp(10)
+        })
         btnQrMode = button("عرض QR الرابط", cPrimary, false) { qrWifi = !qrWifi; refresh() }
         runCard.addView(btnQrMode, lp(top = 6))
         tvSsid = TextView(this); tvPass = TextView(this); tvUrl = TextView(this)
@@ -705,13 +747,7 @@ class MainActivity : Activity() {
         shareCol.addView(runCard)
 
         // الإعدادات
-        settingsCol.addView(TextView(this).apply {
-            text = "الإعدادات"
-            textSize = 24f
-            setTextColor(cText)
-            typeface = android.graphics.Typeface.DEFAULT_BOLD
-        }, lp(bottom = 4))
-        settingsCol.addView(small("خصّص الشبكة ومجلدات النقل والصلاحيات."), lp(bottom = 16))
+        settingsCol.addView(pageIntro("الإعدادات", "تحكّم بالشبكة، مجلد المشاركة، وصلاحيات الأجهزة."), lp(bottom = 14))
         val sc = card()
         sc.addView(heading("إعدادات الشبكة"))
         etName = field("مثال: Share", prefs.networkName)
@@ -732,14 +768,18 @@ class MainActivity : Activity() {
         pathRow.addView(btnApp)
         pathRow.addView(btnDl)
         sc.addView(pathRow, lp(top = 6))
-        swUpload = switchRow("السماح للأجهزة بالرفع وإنشاء المجلدات", prefs.allowUpload)
+        settingsCol.addView(sc)
+        val accessCard = card()
+        accessCard.addView(heading("الأذونات وسلوك الشاشة"))
+        accessCard.addView(small("اترك الرفع والحذف مغلقين إلا عند الحاجة."), lp(bottom = 8))
+        swUpload = switchRow("السماح بالرفع وإنشاء المجلدات", prefs.allowUpload)
         swDelete = switchRow("السماح بالحذف وإعادة التسمية", prefs.allowDelete)
         swScreen = switchRow("إبقاء الشاشة مضاءة أثناء التشغيل", prefs.keepScreenOn)
-        sc.addView(swUpload, lp(top = 8))
-        sc.addView(swDelete, lp())
-        sc.addView(swScreen, lp())
-        settingsCol.addView(sc)
-        settingsViews = listOf(etName, etPass, etPort, etPath, btnRandom, btnApp, btnDl, swUpload, swDelete)
+        accessCard.addView(swUpload, lp(bottom = 8))
+        accessCard.addView(swDelete, lp(bottom = 8))
+        accessCard.addView(swScreen)
+        settingsCol.addView(accessCard)
+        settingsViews = listOf(etName, etPass, etPort, etPath, btnRandom, btnApp, btnDl, swUpload, swDelete, swScreen)
 
         // نصائح
         val tc = card()
@@ -753,7 +793,7 @@ class MainActivity : Activity() {
         settingsCol.addView(speedNote)
 
         // صفحة تعريف التطبيق ومعلومات البناء الفعلية.
-        aboutCol.addView(heading("حول Max Share"), lp(bottom = 4))
+        aboutCol.addView(pageIntro("حول Max Share", "مشاركة ملفات محلية من هاتفك مباشرة."), lp(bottom = 14))
         val aboutIntro = card()
         aboutIntro.addView(heading("مشاركة محلية من هاتفك"))
         aboutIntro.addView(TextView(this).apply {
