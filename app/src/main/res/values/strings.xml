@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Max Share</string>
+    <string name="connection_mode">الوضع: %1$s</string>
+    <string name="transfer_total">إجمالي: %1$s</string>
+    <string name="transfer_rate">%1$s/s</string>
+    <string name="transfer_stats">الأجهزة النشطة: %1$d\nالطلبات: %2$d</string>
+</resources>

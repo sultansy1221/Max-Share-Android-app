@@ -1,0 +1,510 @@
+{
+  "sourceLibrary": "Simple Icons",
+  "sourceVersion": "16.35.0",
+  "sourceLicense": "CC0-1.0 for the collection only; individual marks may have separate rights and trademark protections. See DISCLAIMER-Simple-Icons.md.",
+  "count": 50,
+  "verifiedBrandIconCount": 38,
+  "genericFallbackCount": 12,
+  "apps": [
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "aliases": [],
+      "iconPath": "app-icons/whatsapp.svg",
+      "assetType": "brand-mark",
+      "source": "https://about.meta.com/brand/resources/whatsapp/whatsapp-brand",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "facebook",
+      "name": "Facebook",
+      "aliases": [],
+      "iconPath": "app-icons/facebook.svg",
+      "assetType": "brand-mark",
+      "source": "https://about.meta.com/brand/resources/facebook/logo",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "aliases": [],
+      "iconPath": "app-icons/instagram.svg",
+      "assetType": "brand-mark",
+      "source": "https://about.meta.com/brand/resources/instagram",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "aliases": [],
+      "iconPath": "app-icons/telegram.svg",
+      "assetType": "brand-mark",
+      "source": "https://telegram.org/tour/screenshots",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "snapchat",
+      "name": "Snapchat",
+      "aliases": [],
+      "iconPath": "app-icons/snapchat.svg",
+      "assetType": "brand-mark",
+      "source": "https://www.snapchat.com/brand-guidelines",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "aliases": [],
+      "iconPath": "app-icons/youtube.svg",
+      "assetType": "brand-mark",
+      "source": "https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "tiktok",
+      "name": "TikTok",
+      "aliases": [],
+      "iconPath": "app-icons/tiktok.svg",
+      "assetType": "brand-mark",
+      "source": "https://tiktok.com",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "messenger",
+      "name": "Messenger",
+      "aliases": [],
+      "iconPath": "app-icons/messenger.svg",
+      "assetType": "brand-mark",
+      "source": "https://about.meta.com/brand/resources/facebook/messenger-icon",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "discord",
+      "name": "Discord",
+      "aliases": [],
+      "iconPath": "app-icons/discord.svg",
+      "assetType": "brand-mark",
+      "source": "https://discord.com/branding",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "x",
+      "name": "X",
+      "aliases": [],
+      "iconPath": "app-icons/x.svg",
+      "assetType": "brand-mark",
+      "source": "https://x.com",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "skype",
+      "name": "Skype",
+      "aliases": [],
+      "iconPath": "app-icons/skype.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "zoom",
+      "name": "Zoom",
+      "aliases": [],
+      "iconPath": "app-icons/zoom.svg",
+      "assetType": "brand-mark",
+      "source": "https://brand.zoom.us/media-library/",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "microsoft-teams",
+      "name": "Microsoft Teams",
+      "aliases": [],
+      "iconPath": "app-icons/microsoft-teams.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "gmail",
+      "name": "Gmail",
+      "aliases": [],
+      "iconPath": "app-icons/gmail.svg",
+      "assetType": "brand-mark",
+      "source": "https://fonts.gstatic.com/s/i/productlogos/gmail_2020q4/v8/192px.svg",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-chrome",
+      "name": "Google Chrome",
+      "aliases": [],
+      "iconPath": "app-icons/google-chrome.svg",
+      "assetType": "brand-mark",
+      "source": "https://www.google.com/chrome",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-drive",
+      "name": "Google Drive",
+      "aliases": [],
+      "iconPath": "app-icons/google-drive.svg",
+      "assetType": "brand-mark",
+      "source": "https://developers.google.com/drive/web/branding",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-photos",
+      "name": "Google Photos",
+      "aliases": [],
+      "iconPath": "app-icons/google-photos.svg",
+      "assetType": "brand-mark",
+      "source": "https://partnermarketinghub.withgoogle.com/brands/google-photos/visual-identity/visual-identity/icon/",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-maps",
+      "name": "Google Maps",
+      "aliases": [],
+      "iconPath": "app-icons/google-maps.svg",
+      "assetType": "brand-mark",
+      "source": "https://commons.wikimedia.org/wiki/File:Google_Maps_icon.svg",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-play",
+      "name": "Google Play",
+      "aliases": [],
+      "iconPath": "app-icons/google-play.svg",
+      "assetType": "brand-mark",
+      "source": "https://partnermarketinghub.withgoogle.com/brands/google-play/visual-identity/primary-logos/",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-meet",
+      "name": "Google Meet",
+      "aliases": [],
+      "iconPath": "app-icons/google-meet.svg",
+      "assetType": "brand-mark",
+      "source": "https://about.google/brand-resource-center/logos-list/",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "spotify",
+      "name": "Spotify",
+      "aliases": [],
+      "iconPath": "app-icons/spotify.svg",
+      "assetType": "brand-mark",
+      "source": "https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "netflix",
+      "name": "Netflix",
+      "aliases": [],
+      "iconPath": "app-icons/netflix.svg",
+      "assetType": "brand-mark",
+      "source": "https://brand.netflix.com/en/assets/logos",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "vlc",
+      "name": "VLC",
+      "aliases": [],
+      "iconPath": "app-icons/vlc.svg",
+      "assetType": "brand-mark",
+      "source": "https://code.videolan.org/videolan/vlc/-/blob/1ce7f686ee17a028d2d79627ae69f22d905f2e23/extras/package/macosx/asset_sources/vlc_app_icon.svg",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "adobe-acrobat",
+      "name": "Adobe Acrobat",
+      "aliases": [],
+      "iconPath": "app-icons/adobe-acrobat.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "adobe-photoshop",
+      "name": "Adobe Photoshop",
+      "aliases": [],
+      "iconPath": "app-icons/adobe-photoshop.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "microsoft-word",
+      "name": "Microsoft Word",
+      "aliases": [],
+      "iconPath": "app-icons/microsoft-word.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "microsoft-excel",
+      "name": "Microsoft Excel",
+      "aliases": [],
+      "iconPath": "app-icons/microsoft-excel.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "microsoft-powerpoint",
+      "name": "Microsoft PowerPoint",
+      "aliases": [],
+      "iconPath": "app-icons/microsoft-powerpoint.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "microsoft-outlook",
+      "name": "Microsoft Outlook",
+      "aliases": [],
+      "iconPath": "app-icons/microsoft-outlook.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "microsoft-onedrive",
+      "name": "Microsoft OneDrive",
+      "aliases": [],
+      "iconPath": "app-icons/microsoft-onedrive.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "dropbox",
+      "name": "Dropbox",
+      "aliases": [],
+      "iconPath": "app-icons/dropbox.svg",
+      "assetType": "brand-mark",
+      "source": "https://www.dropbox.com/branding",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-docs",
+      "name": "Google Docs",
+      "aliases": [],
+      "iconPath": "app-icons/google-docs.svg",
+      "assetType": "brand-mark",
+      "source": "https://www.google.com/docs/about",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-sheets",
+      "name": "Google Sheets",
+      "aliases": [],
+      "iconPath": "app-icons/google-sheets.svg",
+      "assetType": "brand-mark",
+      "source": "https://sheets.google.com",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "google-slides",
+      "name": "Google Slides",
+      "aliases": [],
+      "iconPath": "app-icons/google-slides.svg",
+      "assetType": "brand-mark",
+      "source": "https://slides.google.com",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "firefox",
+      "name": "Firefox",
+      "aliases": [],
+      "iconPath": "app-icons/firefox.svg",
+      "assetType": "brand-mark",
+      "source": "https://mozilla.design/firefox/logos-usage/",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "microsoft-edge",
+      "name": "Microsoft Edge",
+      "aliases": [],
+      "iconPath": "app-icons/microsoft-edge.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "opera",
+      "name": "Opera",
+      "aliases": [],
+      "iconPath": "app-icons/opera.svg",
+      "assetType": "brand-mark",
+      "source": "https://brand.opera.com/1472-2/opera-logos/",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "brave",
+      "name": "Brave",
+      "aliases": [],
+      "iconPath": "app-icons/brave.svg",
+      "assetType": "brand-mark",
+      "source": "https://brave.com/brave-branding-assets",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "pinterest",
+      "name": "Pinterest",
+      "aliases": [],
+      "iconPath": "app-icons/pinterest.svg",
+      "assetType": "brand-mark",
+      "source": "https://business.pinterest.com/en/brand-guidelines",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "reddit",
+      "name": "Reddit",
+      "aliases": [],
+      "iconPath": "app-icons/reddit.svg",
+      "assetType": "brand-mark",
+      "source": "https://www.redditinc.com/brand",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn",
+      "aliases": [],
+      "iconPath": "app-icons/linkedin.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    },
+    {
+      "id": "viber",
+      "name": "Viber",
+      "aliases": [],
+      "iconPath": "app-icons/viber.svg",
+      "assetType": "brand-mark",
+      "source": "https://www.viber.com/brand-center",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "signal",
+      "name": "Signal",
+      "aliases": [],
+      "iconPath": "app-icons/signal.svg",
+      "assetType": "brand-mark",
+      "source": "https://signal.org/brand",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "line",
+      "name": "LINE",
+      "aliases": [],
+      "iconPath": "app-icons/line.svg",
+      "assetType": "brand-mark",
+      "source": "https://line.me/en/logo",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "wechat",
+      "name": "WeChat",
+      "aliases": [],
+      "iconPath": "app-icons/wechat.svg",
+      "assetType": "brand-mark",
+      "source": "https://wechat.design/tool/brand",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "twitch",
+      "name": "Twitch",
+      "aliases": [],
+      "iconPath": "app-icons/twitch.svg",
+      "assetType": "brand-mark",
+      "source": "https://brand.twitch.tv",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "steam",
+      "name": "Steam",
+      "aliases": [],
+      "iconPath": "app-icons/steam.svg",
+      "assetType": "brand-mark",
+      "source": "https://partner.steamgames.com/doc/marketing/branding",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "aliases": [],
+      "iconPath": "app-icons/github.svg",
+      "assetType": "brand-mark",
+      "source": "https://github.com/logos",
+      "sourceVersion": "16.35.0",
+      "license": "Icon-specific license not specified in Simple Icons data; trademark/copyright restrictions may apply"
+    },
+    {
+      "id": "android",
+      "name": "Android",
+      "aliases": [],
+      "iconPath": "app-icons/android.svg",
+      "assetType": "brand-mark",
+      "source": "https://partnermarketinghub.withgoogle.com/brands/android/visual-identity/visual-identity/logo-lock-ups",
+      "sourceVersion": "16.35.0",
+      "license": "CC-BY-3.0; attribution: Simple Icons contributors, adapted Android mark"
+    },
+    {
+      "id": "shareit",
+      "name": "SHAREit",
+      "aliases": [],
+      "iconPath": "app-icons/shareit.svg",
+      "assetType": "generic-capability-fallback",
+      "source": "Original generic capability glyph, not an app logo; the reviewed source release did not include a distinct brand asset.",
+      "sourceVersion": null,
+      "license": "Original Max Share project asset"
+    }
+  ]
+}

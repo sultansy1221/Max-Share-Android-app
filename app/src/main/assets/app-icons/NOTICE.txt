@@ -1,0 +1,5 @@
+Max Share app icon library
+
+38 SVG brand marks copied from Simple Icons 16.35.0. Each icon source and any per-icon license data is in catalog.json. The Simple Icons maintainers state that CC0 for the collection does not imply that each brand mark is CC0; trademarks and other rights remain with their owners. See DISCLAIMER-Simple-Icons.md.
+
+12 original generic capability glyphs are included where the source release had no distinct brand icon. They are not brand logos.
