@@ -51,12 +51,28 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 .row:last-child{border-bottom:0}
 .row:hover{background:var(--hv)}
 .row .ic{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:var(--card2);color:var(--pr);flex:none}
+.row .ic{position:relative}
 .row .ic svg{width:22px;height:22px}
+.formatBadge{position:absolute;inset-inline-end:-4px;inset-block-end:-4px;z-index:1;max-width:34px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:2px solid var(--card);border-radius:5px;background:var(--pr);color:#fff;padding:0 3px;font-size:8px;font-weight:800;line-height:12px;direction:ltr;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.2)}
 .row .ic img{width:24px;height:24px;object-fit:contain}
 .row .nm{flex:1;min-width:0;cursor:pointer}
 .row .nm div:first-child{word-break:break-word}
 .row .mt{font-size:11px;color:var(--sub);margin-top:3px}
 .row input[type=checkbox]{width:18px;height:18px}
+.filterBar{display:flex;gap:7px;flex-wrap:wrap}
+.filterBar button{padding:8px 11px;background:var(--card);color:var(--sub);border:1px solid var(--bd)}
+.filterBar button[aria-pressed=true]{background:var(--prSoft);color:var(--pr);border-color:var(--pr)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,168px),1fr));gap:12px;background:transparent;border:0;overflow:visible}
+.gallery-card{position:relative;min-width:0;background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden}
+.gallery-preview{display:grid;width:100%;aspect-ratio:4/3;place-items:center;padding:0;border:0;border-radius:0;background:var(--card2);color:var(--pr);overflow:hidden}
+.gallery-preview svg{width:38px;height:38px}
+.gallery-preview img{width:100%;height:100%;object-fit:cover}
+.gallery-preview img.app-thumb{object-fit:contain;padding:22px}
+.gallery-check{position:absolute;inset-inline-start:10px;inset-block-start:10px;width:22px;height:22px;z-index:1}
+.gallery-meta{padding:10px 11px 11px;min-width:0}
+.gallery-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:650;cursor:pointer}
+.gallery-actions{display:flex;gap:4px;justify-content:flex-end;margin-top:4px}
+.gallery>.empty{grid-column:1/-1}
 .empty{padding:48px 20px;text-align:center;color:var(--sub)}
 #up{margin-bottom:12px}
 #up .u{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin-bottom:8px;font-size:13px}
@@ -74,7 +90,7 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 #pv pre{background:var(--card);color:var(--tx);padding:14px;border-radius:10px;max-width:100%;overflow:auto;white-space:pre-wrap;word-break:break-word;direction:ltr;text-align:left;margin:0}
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#15272b;color:#fff;padding:10px 18px;border-radius:12px;font-size:14px;z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 #toast.show{opacity:1}
-@media(max-width:600px){header{padding:11px 14px}.brand img{width:40px;height:40px}.brand b{font-size:15px}.brand small{font-size:11px}#free{white-space:normal;font-size:10px;padding:6px 8px}main{padding:16px 12px 34px}.hero{padding:20px;border-radius:18px}.row{gap:8px;padding:11px 9px}.row .ic{width:36px;height:36px}.tool button,.tool .btn{padding:10px 11px;font-size:13px}}
+@media(max-width:600px){header{padding:11px 14px}.brand img{width:40px;height:40px}.brand b{font-size:15px}.brand small{font-size:11px}#free{white-space:normal;font-size:10px;padding:6px 8px}main{padding:16px 12px 34px}.hero{padding:20px;border-radius:18px}.row{gap:8px;padding:11px 9px}.row .ic{width:36px;height:36px}.tool button,.tool .btn{padding:10px 11px;font-size:13px}.gallery{grid-template-columns:repeat(auto-fill,minmax(min(100%,142px),1fr));gap:9px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style></head><body>
 <header><div class="brand"><img src="/brand.png" alt=""><div><b>Max Share</b><small>مشاركة محلية بين أجهزتك</small></div></div><span id="free"></span></header>
@@ -83,6 +99,17 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 <div class="tool">
    <input type="search" id="q" aria-label="بحث في هذا المجلد" placeholder="بحث في هذا المجلد…">
   <select id="sort"><option value="name">الاسم</option><option value="size">الحجم</option><option value="date">الأحدث</option></select>
+</div>
+<div class="tool" role="group" aria-label="طريقة عرض الملفات">
+  <button class="g" id="btnList" type="button" aria-pressed="true">قائمة الملفات</button>
+  <button class="g" id="btnGallery" type="button" aria-pressed="false">معرض الوسائط والتطبيقات</button>
+  <div class="filterBar" id="galleryFilters" role="group" aria-label="تصفية المعرض" hidden>
+    <button type="button" data-filter="all" aria-pressed="true">الكل</button>
+    <button type="button" data-filter="image" aria-pressed="false">الصور</button>
+    <button type="button" data-filter="video" aria-pressed="false">الفيديو</button>
+    <button type="button" data-filter="audio" aria-pressed="false">الصوت</button>
+    <button type="button" data-filter="app" aria-pressed="false">التطبيقات (APK)</button>
+  </div>
 </div>
 <div class="tool">
   <label class="btn" id="bUp"><span data-icon="upload"></span><span>رفع ملفات</span><input type="file" id="fi" multiple hidden></label>
@@ -103,7 +130,7 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 <div id="toast"></div>
 <script>
 (function(){
-var cur="",items=[],sel={},info={upload:true,delete:true,free:0,total:0};
+var cur="",items=[],sel={},info={upload:true,delete:true,free:0,total:0},galleryMode=false,galleryFilter="all";
 function g(id){return document.getElementById(id);}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e;}
  var P={
@@ -126,6 +153,11 @@ function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==und
   mail:"<rect x='3' y='5' width='18' height='14' rx='2'/><path d='m4 7 8 6 8-6'/>",
   presentation:"<rect x='3' y='4' width='18' height='13' rx='2'/><path d='m8 21 4-4 4 4M12 17v4m-5-8 3-3 2 2 3-4'/>",
   android:"<path d='M7 8a5 5 0 0 1 10 0M6 8h12v8a2 2 0 0 1-2 2h-1v3h-2v-3h-2v3H9v-3H8a2 2 0 0 1-2-2V8Z'/><path d='m8 3-2-2m10 2 2-2M9 11h.01M15 11h.01'/>",
+  database:"<ellipse cx='12' cy='5' rx='8' ry='3'/><path d='M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3'/>",
+  font:"<path d='m4 20 8-17 8 17M7 14h10M5 20h14'/>",
+  disk:"<circle cx='12' cy='12' r='9'/><circle cx='12' cy='12' r='3'/><path d='m18.4 5.6-4.3 4.3'/>",
+  design:"<path d='m4 16 8-12 8 12-8 4-8-4Z'/><path d='M8 14h8m-4-10v16'/>",
+  package:"<path d='m12 3 9 5v8l-9 5-9-5V8l9-5Z'/><path d='m3 8 9 5 9-5m-9 5v8m-4-15 9 5'/>",
   file:"<path d='M6 3h8l4 4v14H6z'/><path d='M14 3v5h5'/>"
  };
  function svg(name){return '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(P[name]||P.file)+'</svg>';}
@@ -152,17 +184,36 @@ function sz(n){if(n<1024)return n+" B";if(n<1048576)return (n/1024).toFixed(1)+"
 function ext(n){var i=n.lastIndexOf(".");return i<0?"":n.slice(i+1).toLowerCase();}
 var T={img:["jpg","jpeg","png","gif","webp","bmp","svg"],vid:["mp4","webm","mkv","mov","3gp","m4v"],aud:["mp3","wav","ogg","m4a","aac","flac"],txt:["txt","md","log","json","xml","csv","html","js","css","kt","java","py","ini","yml","yaml"],pdf:["pdf"]};
 function kind(n){var e=ext(n);for(var k in T){if(T[k].indexOf(e)>=0)return k;}return "";}
+var FILE_FORMATS={
+  apk:{path:"android",label:"تطبيق Android"},aab:{path:"android",label:"حزمة تطبيق Android"},apks:{path:"android",label:"حزمة تطبيق Android"},xapk:{path:"android",label:"حزمة تطبيق Android"},
+  zip:{path:"archive",label:"أرشيف ZIP"},rar:{path:"archive",label:"أرشيف RAR"},"7z":{path:"archive",label:"أرشيف 7Z"},tar:{path:"archive",label:"أرشيف TAR"},gz:{path:"archive",label:"أرشيف GZ"},gzip:{path:"archive",label:"أرشيف GZIP"},bz2:{path:"archive",label:"أرشيف BZ2"},xz:{path:"archive",label:"أرشيف XZ"},zst:{path:"archive",label:"أرشيف Zstandard"},lz:{path:"archive",label:"أرشيف LZ"},lzma:{path:"archive",label:"أرشيف LZMA"},tgz:{path:"archive",label:"أرشيف TGZ"},cab:{path:"archive",label:"أرشيف CAB"},arj:{path:"archive",label:"أرشيف ARJ"},
+  pdf:{path:"pdf",label:"ملف PDF"},doc:{path:"document",label:"مستند Word"},docx:{path:"document",label:"مستند Word"},odt:{path:"document",label:"مستند OpenDocument"},rtf:{path:"document",label:"مستند RTF"},txt:{path:"document",label:"ملف نصي"},md:{path:"document",label:"ملف Markdown"},rst:{path:"document",label:"مستند نصي"},pages:{path:"document",label:"مستند Pages"},wpd:{path:"document",label:"مستند WordPerfect"},
+  xls:{path:"table",label:"جدول Excel"},xlsx:{path:"table",label:"جدول Excel"},xlsm:{path:"table",label:"جدول Excel"},ods:{path:"table",label:"جدول OpenDocument"},csv:{path:"table",label:"ملف CSV"},tsv:{path:"table",label:"ملف TSV"},numbers:{path:"table",label:"جدول Numbers"},
+  ppt:{path:"presentation",label:"عرض PowerPoint"},pptx:{path:"presentation",label:"عرض PowerPoint"},pptm:{path:"presentation",label:"عرض PowerPoint"},odp:{path:"presentation",label:"عرض OpenDocument"},key:{path:"presentation",label:"عرض Keynote"},
+  jpg:{path:"image",label:"صورة JPEG"},jpeg:{path:"image",label:"صورة JPEG"},png:{path:"image",label:"صورة PNG"},gif:{path:"image",label:"صورة GIF"},webp:{path:"image",label:"صورة WebP"},bmp:{path:"image",label:"صورة BMP"},svg:{path:"image",label:"صورة SVG"},heic:{path:"image",label:"صورة HEIC"},heif:{path:"image",label:"صورة HEIF"},tif:{path:"image",label:"صورة TIFF"},tiff:{path:"image",label:"صورة TIFF"},avif:{path:"image",label:"صورة AVIF"},ico:{path:"image",label:"أيقونة"},raw:{path:"image",label:"صورة RAW"},dng:{path:"image",label:"صورة DNG"},cr2:{path:"image",label:"صورة Canon RAW"},nef:{path:"image",label:"صورة Nikon RAW"},
+  mp4:{path:"video",label:"فيديو MP4"},m4v:{path:"video",label:"فيديو M4V"},mkv:{path:"video",label:"فيديو Matroska"},mov:{path:"video",label:"فيديو MOV"},avi:{path:"video",label:"فيديو AVI"},webm:{path:"video",label:"فيديو WebM"},"3gp":{path:"video",label:"فيديو 3GP"},mpeg:{path:"video",label:"فيديو MPEG"},mpg:{path:"video",label:"فيديو MPEG"},wmv:{path:"video",label:"فيديو WMV"},flv:{path:"video",label:"فيديو FLV"},mts:{path:"video",label:"فيديو MTS"},m2ts:{path:"video",label:"فيديو M2TS"},
+  mp3:{path:"audio",label:"صوت MP3"},wav:{path:"audio",label:"صوت WAV"},ogg:{path:"audio",label:"صوت OGG"},oga:{path:"audio",label:"صوت OGG"},m4a:{path:"audio",label:"صوت M4A"},aac:{path:"audio",label:"صوت AAC"},flac:{path:"audio",label:"صوت FLAC"},opus:{path:"audio",label:"صوت Opus"},wma:{path:"audio",label:"صوت WMA"},amr:{path:"audio",label:"صوت AMR"},mid:{path:"audio",label:"ملف MIDI"},midi:{path:"audio",label:"ملف MIDI"},
+  html:{path:"code",label:"ملف HTML"},htm:{path:"code",label:"ملف HTML"},xhtml:{path:"code",label:"ملف XHTML"},css:{path:"code",label:"ملف CSS"},scss:{path:"code",label:"ملف SCSS"},sass:{path:"code",label:"ملف Sass"},less:{path:"code",label:"ملف Less"},js:{path:"code",label:"ملف JavaScript"},mjs:{path:"code",label:"ملف JavaScript"},cjs:{path:"code",label:"ملف JavaScript"},jsx:{path:"code",label:"ملف React JSX"},ts:{path:"code",label:"ملف TypeScript"},tsx:{path:"code",label:"ملف React TypeScript"},json:{path:"code",label:"ملف JSON"},xml:{path:"code",label:"ملف XML"},yaml:{path:"code",label:"ملف YAML"},yml:{path:"code",label:"ملف YAML"},toml:{path:"code",label:"ملف TOML"},ini:{path:"code",label:"ملف إعدادات"},cfg:{path:"code",label:"ملف إعدادات"},conf:{path:"code",label:"ملف إعدادات"},config:{path:"code",label:"ملف إعدادات"},properties:{path:"code",label:"ملف إعدادات"},env:{path:"code",label:"ملف إعدادات"},lock:{path:"code",label:"ملف قفل"},
+  c:{path:"code",label:"ملف C"},h:{path:"code",label:"ملف C Header"},cc:{path:"code",label:"ملف C++"},cpp:{path:"code",label:"ملف C++"},hpp:{path:"code",label:"ملف C++ Header"},cs:{path:"code",label:"ملف C#"},java:{path:"code",label:"ملف Java"},kt:{path:"code",label:"ملف Kotlin"},kts:{path:"code",label:"ملف Kotlin Script"},py:{path:"code",label:"ملف Python"},pyc:{path:"code",label:"ملف Python"},ipynb:{path:"code",label:"دفتر Jupyter"},go:{path:"code",label:"ملف Go"},rs:{path:"code",label:"ملف Rust"},php:{path:"code",label:"ملف PHP"},rb:{path:"code",label:"ملف Ruby"},swift:{path:"code",label:"ملف Swift"},m:{path:"code",label:"ملف Objective-C"},mm:{path:"code",label:"ملف Objective-C++"},sql:{path:"database",label:"ملف SQL"},sh:{path:"code",label:"ملف Shell"},bash:{path:"code",label:"ملف Bash"},zsh:{path:"code",label:"ملف Zsh"},ps1:{path:"code",label:"ملف PowerShell"},bat:{path:"code",label:"ملف Windows Batch"},cmd:{path:"code",label:"ملف Windows Command"},lua:{path:"code",label:"ملف Lua"},pl:{path:"code",label:"ملف Perl"},ex:{path:"code",label:"ملف Elixir"},exs:{path:"code",label:"ملف Elixir Script"},scala:{path:"code",label:"ملف Scala"},groovy:{path:"code",label:"ملف Groovy"},gradle:{path:"code",label:"ملف Gradle"},vue:{path:"code",label:"ملف Vue"},svelte:{path:"code",label:"ملف Svelte"},astro:{path:"code",label:"ملف Astro"},wasm:{path:"code",label:"ملف WebAssembly"},
+  db:{path:"database",label:"قاعدة بيانات"},sqlite:{path:"database",label:"قاعدة بيانات SQLite"},sqlite3:{path:"database",label:"قاعدة بيانات SQLite"},mdb:{path:"database",label:"قاعدة بيانات Access"},accdb:{path:"database",label:"قاعدة بيانات Access"},bak:{path:"database",label:"نسخة احتياطية"},
+  ttf:{path:"font",label:"خط TrueType"},otf:{path:"font",label:"خط OpenType"},woff:{path:"font",label:"خط Web Open Font"},woff2:{path:"font",label:"خط Web Open Font"},
+  epub:{path:"document",label:"كتاب إلكتروني EPUB"},mobi:{path:"document",label:"كتاب إلكتروني MOBI"},azw:{path:"document",label:"كتاب Kindle"},azw3:{path:"document",label:"كتاب Kindle"},fb2:{path:"document",label:"كتاب إلكتروني"},djvu:{path:"document",label:"كتاب DJVU"},
+  iso:{path:"disk",label:"صورة قرص ISO"},img:{path:"disk",label:"صورة قرص"},dmg:{path:"disk",label:"صورة قرص macOS"},vmdk:{path:"disk",label:"قرص افتراضي"},vdi:{path:"disk",label:"قرص افتراضي"},
+  psd:{path:"design",label:"ملف Photoshop"},ai:{path:"design",label:"ملف Illustrator"},eps:{path:"design",label:"ملف EPS"},sketch:{path:"design",label:"ملف Sketch"},fig:{path:"design",label:"ملف Figma"},xd:{path:"design",label:"ملف Adobe XD"},blend:{path:"design",label:"مشروع Blender"},obj:{path:"design",label:"نموذج ثلاثي الأبعاد"},fbx:{path:"design",label:"نموذج ثلاثي الأبعاد"},stl:{path:"design",label:"نموذج ثلاثي الأبعاد"},dwg:{path:"design",label:"رسم CAD"},dxf:{path:"design",label:"رسم CAD"},
+  exe:{path:"package",label:"برنامج Windows"},msi:{path:"package",label:"مثبّت Windows"},deb:{path:"package",label:"حزمة Linux"},rpm:{path:"package",label:"حزمة Linux"},pkg:{path:"package",label:"مثبّت macOS"},ipa:{path:"package",label:"تطبيق iOS"},
+  eml:{path:"mail",label:"رسالة بريد"},msg:{path:"mail",label:"رسالة بريد"},pst:{path:"mail",label:"أرشيف بريد"},mbox:{path:"mail",label:"أرشيف بريد"},vcf:{path:"document",label:"بطاقة جهة اتصال"},ics:{path:"document",label:"ملف تقويم"},torrent:{path:"file",label:"ملف تورنت"},srt:{path:"document",label:"ترجمة فيديو"},ass:{path:"document",label:"ترجمة فيديو"},ssa:{path:"document",label:"ترجمة فيديو"},vtt:{path:"document",label:"ترجمة فيديو"},cas:{path:"file",label:"ملف CAS"}
+};
+function formatInfo(name){var e=ext(name),info=FILE_FORMATS[e]||{path:"file",label:e?"ملف "+e.toUpperCase():"ملف دون امتداد"};return {path:info.path,label:info.label,badge:e?e.toUpperCase().slice(0,6):""};}
+function mediaCategory(it){if(it.dir)return "folder";if(ext(it.name)==="apk"||it.applicationId||it.appIconDataUrl)return "app";var k=kind(it.name);if(k==="img")return "image";if(k==="vid")return "video";if(k==="aud")return "audio";return "other";}
+function matchesGalleryFilter(it,filter){var category=mediaCategory(it);if(filter==="all")return ["image","video","audio","app"].indexOf(category)>=0;return category===filter;}
  function fileIcon(it){
-  if(it.appIconDataUrl)return {src:it.appIconDataUrl,label:it.applicationLabel||"أيقونة التطبيق"};
+  var badge=ext(it.name).toUpperCase().slice(0,6);
+  if(it.appIconDataUrl)return {src:it.appIconDataUrl,label:it.applicationLabel||"أيقونة التطبيق",badge:badge};
   var app=APP_ICONS[(it.applicationId||"").toLowerCase()];
-  if(app)return {src:"/icons/"+app+".svg",label:it.applicationLabel||"أيقونة التطبيق"};
-  if(it.dir)return {path:"folder",label:"مجلد"};
-  var e=ext(it.name),k=kind(it.name);
-  var byExt={pdf:"pdf",zip:"archive",rar:"archive","7z":"archive",gz:"archive",tar:"archive",apk:"android",
-   doc:"document",docx:"document",rtf:"document",odt:"document",xls:"table",xlsx:"table",csv:"table",
-   ppt:"presentation",pptx:"presentation",odp:"presentation",eml:"mail",msg:"mail",pst:"mail"};
-  var path=byExt[e]||({img:"image",vid:"video",aud:"audio",txt:"code"}[k]||"file");
-  return {path:path,label:({pdf:"ملف PDF",archive:"أرشيف",android:"حزمة تطبيق Android",image:"صورة",video:"فيديو",audio:"ملف صوتي",table:"جدول",presentation:"عرض تقديمي",mail:"بريد إلكتروني",document:"مستند",code:"ملف نصي"})[path]||"ملف"};
+  if(app)return {src:"/icons/"+app+".svg",label:it.applicationLabel||"أيقونة التطبيق",badge:badge};
+  if(it.dir)return {path:"folder",label:"مجلد",badge:""};
+  var info=formatInfo(it.name);
+  return {path:info.path,label:info.label,badge:info.badge};
  }
 function toast(m){var t=g("toast");t.textContent=m;t.className="show";clearTimeout(toast.h);toast.h=setTimeout(function(){t.className="";},2600);}
 function api(url,data){
@@ -205,12 +256,56 @@ function view(){
   });
   return l;
 }
+function visibleItems(){
+  var l=view();
+  return galleryMode?l.filter(function(it){return matchesGalleryFilter(it,galleryFilter);}):l;
+}
+function renderGalleryCard(it,box){
+  var full=join(cur,it.name),category=mediaCategory(it),card=el("article","gallery-card");
+  var cb=el("input","gallery-check");cb.type="checkbox";cb.checked=!!sel[full];
+  cb.setAttribute("aria-label","تحديد "+it.name);
+  cb.onchange=function(){sel[full]=cb.checked;bulk();};
+  card.appendChild(cb);
+  var opener=el("button","gallery-preview");opener.type="button";
+  opener.setAttribute("aria-label",(category==="app"?"تحميل التطبيق ":"معاينة ")+it.name);
+  opener.onclick=function(){open(full,it);};
+  var mark=fileIcon(it);
+  if(category==="image"||category==="app"&&mark.src){
+    var image=el("img",category==="app"?"app-thumb":"media-thumb");
+    image.src=category==="image"?"/f/"+enc(full):mark.src;
+    image.alt="";image.loading="lazy";
+    image.onerror=function(){opener.innerHTML=svg(category==="image"?"image":category==="app"?"android":mark.path);};
+    opener.appendChild(image);
+  }else{
+    opener.innerHTML=svg(category==="video"?"video":category==="audio"?"audio":mark.path);
+  }
+  card.appendChild(opener);
+  var meta=el("div","gallery-meta");
+  meta.appendChild(el("div","gallery-name",it.applicationLabel||it.name));
+  var labels={image:"صورة",video:"فيديو",audio:"صوت",app:"تطبيق Android"};
+  meta.appendChild(el("div","mt",labels[category]+" · "+sz(it.size)));
+  var actions=el("div","gallery-actions");
+  var dl=el("button","i");dl.innerHTML=svg("download");dl.title="تحميل";dl.setAttribute("aria-label","تحميل "+it.name);
+  dl.onclick=function(){download(full);};actions.appendChild(dl);
+  if(info["delete"]){
+    var rn=el("button","i");rn.innerHTML=svg("rename");rn.title="إعادة تسمية";rn.setAttribute("aria-label","إعادة تسمية "+it.name);
+    rn.onclick=function(){rename(full,it.name);};actions.appendChild(rn);
+    var rm=el("button","i");rm.innerHTML=svg("trash");rm.title="حذف";rm.setAttribute("aria-label","حذف "+it.name);
+    rm.onclick=function(){remove([full]);};actions.appendChild(rm);
+  }
+  meta.appendChild(actions);card.appendChild(meta);box.appendChild(card);
+}
 function render(){
   crumbs();
   var box=g("list");box.innerHTML="";
-  var l=view();
-  if(!l.length){box.appendChild(el("div","empty",items.length?"لا نتائج":"المجلد فارغ"));}
-  l.forEach(function(it){
+  box.className=galleryMode?"list gallery":"list";
+  var l=visibleItems();
+  if(!l.length){
+    var emptyText=galleryMode?"لا توجد صور أو فيديوهات أو ملفات صوت أو تطبيقات APK في هذا المجلد.":(items.length?"لا نتائج":"المجلد فارغ");
+    box.appendChild(el("div","empty",emptyText));
+  }
+  if(galleryMode){l.forEach(function(it){renderGalleryCard(it,box);});}
+  else l.forEach(function(it){
     var full=join(cur,it.name);
     var row=el("div","row");
     var cb=el("input");cb.type="checkbox";cb.checked=!!sel[full];
@@ -218,9 +313,10 @@ function render(){
     cb.onchange=function(){sel[full]=cb.checked;bulk();};
     row.appendChild(cb);
     var ic=el("div","ic"),mark=fileIcon(it);
-    ic.setAttribute("role","img");ic.setAttribute("aria-label",mark.label);
+    ic.setAttribute("role","img");ic.setAttribute("aria-label",mark.label+(mark.badge?" · "+mark.badge:""));
     if(mark.src){var image=el("img");image.src=mark.src;image.alt="";image.onerror=function(){ic.innerHTML=svg("file");};ic.appendChild(image);}
     else ic.innerHTML=svg(mark.path);
+    if(mark.badge){var badge=el("span","formatBadge",mark.badge);ic.appendChild(badge);}
     row.appendChild(ic);
     var nm=el("div","nm");
     nm.appendChild(el("div",null,it.name));
@@ -309,9 +405,22 @@ function next(){
    // إرسال الملف الخام يتجنب multipart المؤقت ونسخ الملف الكبير مرتين على الهاتف.
    x.send(job.f);
 }
+function syncGalleryControls(){
+  g("btnList").setAttribute("aria-pressed",String(!galleryMode));
+  g("btnGallery").setAttribute("aria-pressed",String(galleryMode));
+  g("galleryFilters").hidden=!galleryMode;
+  document.querySelectorAll("[data-filter]").forEach(function(button){
+    button.setAttribute("aria-pressed",String(button.getAttribute("data-filter")===galleryFilter));
+  });
+}
+g("btnList").onclick=function(){galleryMode=false;syncGalleryControls();render();};
+g("btnGallery").onclick=function(){galleryMode=true;syncGalleryControls();render();};
+document.querySelectorAll("[data-filter]").forEach(function(button){
+  button.onclick=function(){galleryMode=true;galleryFilter=button.getAttribute("data-filter");syncGalleryControls();render();};
+});
 g("fi").onchange=function(e){enqueue(e.target.files);e.target.value="";};
 g("bMk").onclick=function(){var n=prompt("اسم المجلد الجديد");if(n)api("/api/mkdir",{path:cur,name:n}).then(function(){load(cur);}).catch(function(e){toast(e.message);});};
-g("bAll").onclick=function(){var any=selKeys().length>0;sel={};if(!any)view().forEach(function(i){sel[join(cur,i.name)]=true;});render();};
+g("bAll").onclick=function(){var any=selKeys().length>0;sel={};if(!any)visibleItems().forEach(function(i){sel[join(cur,i.name)]=true;});render();};
 g("bZip").onclick=function(){zip(selKeys());};
 g("bDel").onclick=function(){remove(selKeys());};
 g("q").oninput=render;g("sort").onchange=render;
@@ -322,7 +431,7 @@ window.addEventListener("dragenter",function(e){e.preventDefault();depth++;if(in
 window.addEventListener("dragleave",function(e){e.preventDefault();depth=Math.max(0,depth-1);if(!depth)g("drop").hidden=true;});
 window.addEventListener("dragover",function(e){e.preventDefault();});
 window.addEventListener("drop",function(e){e.preventDefault();depth=0;g("drop").hidden=true;if(e.dataTransfer&&e.dataTransfer.files.length)enqueue(e.dataTransfer.files);});
-loadInfo();load("");
+syncGalleryControls();loadInfo();load("");
 })();
 </script></body></html>"""
 }
