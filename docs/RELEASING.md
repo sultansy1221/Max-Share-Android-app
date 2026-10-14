@@ -4,7 +4,7 @@
 
 عدّل القيمتين في `app/build.gradle.kts` مع كل إصدار:
 
-- `versionName`: اسم الإصدار المقروء، مثل `2.3.1`.
+- `versionName`: اسم الإصدار المقروء، مثل `2.3.2`.
 - `versionCode`: عدد صحيح يزداد مع كل APK يُوزّع كتحديث.
 
 لا تغيّر `applicationId` (`com.portablefileserver`) إلا بقرار منتج واضح؛ تغييره يجعل Android يتعامل مع التطبيق كتطبيق مختلف.

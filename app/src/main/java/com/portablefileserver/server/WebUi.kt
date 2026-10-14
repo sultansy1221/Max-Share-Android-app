@@ -57,6 +57,20 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 .row .nm div:first-child{word-break:break-word}
 .row .mt{font-size:11px;color:var(--sub);margin-top:3px}
 .row input[type=checkbox]{width:18px;height:18px}
+.filterBar{display:flex;gap:7px;flex-wrap:wrap}
+.filterBar button{padding:8px 11px;background:var(--card);color:var(--sub);border:1px solid var(--bd)}
+.filterBar button[aria-pressed=true]{background:var(--prSoft);color:var(--pr);border-color:var(--pr)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,168px),1fr));gap:12px;background:transparent;border:0;overflow:visible}
+.gallery-card{position:relative;min-width:0;background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden}
+.gallery-preview{display:grid;width:100%;aspect-ratio:4/3;place-items:center;padding:0;border:0;border-radius:0;background:var(--card2);color:var(--pr);overflow:hidden}
+.gallery-preview svg{width:38px;height:38px}
+.gallery-preview img{width:100%;height:100%;object-fit:cover}
+.gallery-preview img.app-thumb{object-fit:contain;padding:22px}
+.gallery-check{position:absolute;inset-inline-start:10px;inset-block-start:10px;width:22px;height:22px;z-index:1}
+.gallery-meta{padding:10px 11px 11px;min-width:0}
+.gallery-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:650;cursor:pointer}
+.gallery-actions{display:flex;gap:4px;justify-content:flex-end;margin-top:4px}
+.gallery>.empty{grid-column:1/-1}
 .empty{padding:48px 20px;text-align:center;color:var(--sub)}
 #up{margin-bottom:12px}
 #up .u{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin-bottom:8px;font-size:13px}
@@ -74,7 +88,7 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 #pv pre{background:var(--card);color:var(--tx);padding:14px;border-radius:10px;max-width:100%;overflow:auto;white-space:pre-wrap;word-break:break-word;direction:ltr;text-align:left;margin:0}
 #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#15272b;color:#fff;padding:10px 18px;border-radius:12px;font-size:14px;z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 #toast.show{opacity:1}
-@media(max-width:600px){header{padding:11px 14px}.brand img{width:40px;height:40px}.brand b{font-size:15px}.brand small{font-size:11px}#free{white-space:normal;font-size:10px;padding:6px 8px}main{padding:16px 12px 34px}.hero{padding:20px;border-radius:18px}.row{gap:8px;padding:11px 9px}.row .ic{width:36px;height:36px}.tool button,.tool .btn{padding:10px 11px;font-size:13px}}
+@media(max-width:600px){header{padding:11px 14px}.brand img{width:40px;height:40px}.brand b{font-size:15px}.brand small{font-size:11px}#free{white-space:normal;font-size:10px;padding:6px 8px}main{padding:16px 12px 34px}.hero{padding:20px;border-radius:18px}.row{gap:8px;padding:11px 9px}.row .ic{width:36px;height:36px}.tool button,.tool .btn{padding:10px 11px;font-size:13px}.gallery{grid-template-columns:repeat(auto-fill,minmax(min(100%,142px),1fr));gap:9px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 </style></head><body>
 <header><div class="brand"><img src="/brand.png" alt=""><div><b>Max Share</b><small>مشاركة محلية بين أجهزتك</small></div></div><span id="free"></span></header>
@@ -83,6 +97,17 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 <div class="tool">
    <input type="search" id="q" aria-label="بحث في هذا المجلد" placeholder="بحث في هذا المجلد…">
   <select id="sort"><option value="name">الاسم</option><option value="size">الحجم</option><option value="date">الأحدث</option></select>
+</div>
+<div class="tool" role="group" aria-label="طريقة عرض الملفات">
+  <button class="g" id="btnList" type="button" aria-pressed="true">قائمة الملفات</button>
+  <button class="g" id="btnGallery" type="button" aria-pressed="false">معرض الوسائط والتطبيقات</button>
+  <div class="filterBar" id="galleryFilters" role="group" aria-label="تصفية المعرض" hidden>
+    <button type="button" data-filter="all" aria-pressed="true">الكل</button>
+    <button type="button" data-filter="image" aria-pressed="false">الصور</button>
+    <button type="button" data-filter="video" aria-pressed="false">الفيديو</button>
+    <button type="button" data-filter="audio" aria-pressed="false">الصوت</button>
+    <button type="button" data-filter="app" aria-pressed="false">التطبيقات (APK)</button>
+  </div>
 </div>
 <div class="tool">
   <label class="btn" id="bUp"><span data-icon="upload"></span><span>رفع ملفات</span><input type="file" id="fi" multiple hidden></label>
@@ -103,7 +128,7 @@ button svg,.btn svg{width:18px;height:18px;flex:none}
 <div id="toast"></div>
 <script>
 (function(){
-var cur="",items=[],sel={},info={upload:true,delete:true,free:0,total:0};
+var cur="",items=[],sel={},info={upload:true,delete:true,free:0,total:0},galleryMode=false,galleryFilter="all";
 function g(id){return document.getElementById(id);}
 function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e;}
  var P={
@@ -152,6 +177,8 @@ function sz(n){if(n<1024)return n+" B";if(n<1048576)return (n/1024).toFixed(1)+"
 function ext(n){var i=n.lastIndexOf(".");return i<0?"":n.slice(i+1).toLowerCase();}
 var T={img:["jpg","jpeg","png","gif","webp","bmp","svg"],vid:["mp4","webm","mkv","mov","3gp","m4v"],aud:["mp3","wav","ogg","m4a","aac","flac"],txt:["txt","md","log","json","xml","csv","html","js","css","kt","java","py","ini","yml","yaml"],pdf:["pdf"]};
 function kind(n){var e=ext(n);for(var k in T){if(T[k].indexOf(e)>=0)return k;}return "";}
+function mediaCategory(it){if(it.dir)return "folder";if(ext(it.name)==="apk"||it.applicationId||it.appIconDataUrl)return "app";var k=kind(it.name);if(k==="img")return "image";if(k==="vid")return "video";if(k==="aud")return "audio";return "other";}
+function matchesGalleryFilter(it,filter){var category=mediaCategory(it);if(filter==="all")return ["image","video","audio","app"].indexOf(category)>=0;return category===filter;}
  function fileIcon(it){
   if(it.appIconDataUrl)return {src:it.appIconDataUrl,label:it.applicationLabel||"أيقونة التطبيق"};
   var app=APP_ICONS[(it.applicationId||"").toLowerCase()];
@@ -205,12 +232,56 @@ function view(){
   });
   return l;
 }
+function visibleItems(){
+  var l=view();
+  return galleryMode?l.filter(function(it){return matchesGalleryFilter(it,galleryFilter);}):l;
+}
+function renderGalleryCard(it,box){
+  var full=join(cur,it.name),category=mediaCategory(it),card=el("article","gallery-card");
+  var cb=el("input","gallery-check");cb.type="checkbox";cb.checked=!!sel[full];
+  cb.setAttribute("aria-label","تحديد "+it.name);
+  cb.onchange=function(){sel[full]=cb.checked;bulk();};
+  card.appendChild(cb);
+  var opener=el("button","gallery-preview");opener.type="button";
+  opener.setAttribute("aria-label",(category==="app"?"تحميل التطبيق ":"معاينة ")+it.name);
+  opener.onclick=function(){open(full,it);};
+  var mark=fileIcon(it);
+  if(category==="image"||category==="app"&&mark.src){
+    var image=el("img",category==="app"?"app-thumb":"media-thumb");
+    image.src=category==="image"?"/f/"+enc(full):mark.src;
+    image.alt="";image.loading="lazy";
+    image.onerror=function(){opener.innerHTML=svg(category==="image"?"image":category==="app"?"android":mark.path);};
+    opener.appendChild(image);
+  }else{
+    opener.innerHTML=svg(category==="video"?"video":category==="audio"?"audio":mark.path);
+  }
+  card.appendChild(opener);
+  var meta=el("div","gallery-meta");
+  meta.appendChild(el("div","gallery-name",it.applicationLabel||it.name));
+  var labels={image:"صورة",video:"فيديو",audio:"صوت",app:"تطبيق Android"};
+  meta.appendChild(el("div","mt",labels[category]+" · "+sz(it.size)));
+  var actions=el("div","gallery-actions");
+  var dl=el("button","i");dl.innerHTML=svg("download");dl.title="تحميل";dl.setAttribute("aria-label","تحميل "+it.name);
+  dl.onclick=function(){download(full);};actions.appendChild(dl);
+  if(info["delete"]){
+    var rn=el("button","i");rn.innerHTML=svg("rename");rn.title="إعادة تسمية";rn.setAttribute("aria-label","إعادة تسمية "+it.name);
+    rn.onclick=function(){rename(full,it.name);};actions.appendChild(rn);
+    var rm=el("button","i");rm.innerHTML=svg("trash");rm.title="حذف";rm.setAttribute("aria-label","حذف "+it.name);
+    rm.onclick=function(){remove([full]);};actions.appendChild(rm);
+  }
+  meta.appendChild(actions);card.appendChild(meta);box.appendChild(card);
+}
 function render(){
   crumbs();
   var box=g("list");box.innerHTML="";
-  var l=view();
-  if(!l.length){box.appendChild(el("div","empty",items.length?"لا نتائج":"المجلد فارغ"));}
-  l.forEach(function(it){
+  box.className=galleryMode?"list gallery":"list";
+  var l=visibleItems();
+  if(!l.length){
+    var emptyText=galleryMode?"لا توجد صور أو فيديوهات أو ملفات صوت أو تطبيقات APK في هذا المجلد.":(items.length?"لا نتائج":"المجلد فارغ");
+    box.appendChild(el("div","empty",emptyText));
+  }
+  if(galleryMode){l.forEach(function(it){renderGalleryCard(it,box);});}
+  else l.forEach(function(it){
     var full=join(cur,it.name);
     var row=el("div","row");
     var cb=el("input");cb.type="checkbox";cb.checked=!!sel[full];
@@ -309,9 +380,22 @@ function next(){
    // إرسال الملف الخام يتجنب multipart المؤقت ونسخ الملف الكبير مرتين على الهاتف.
    x.send(job.f);
 }
+function syncGalleryControls(){
+  g("btnList").setAttribute("aria-pressed",String(!galleryMode));
+  g("btnGallery").setAttribute("aria-pressed",String(galleryMode));
+  g("galleryFilters").hidden=!galleryMode;
+  document.querySelectorAll("[data-filter]").forEach(function(button){
+    button.setAttribute("aria-pressed",String(button.getAttribute("data-filter")===galleryFilter));
+  });
+}
+g("btnList").onclick=function(){galleryMode=false;syncGalleryControls();render();};
+g("btnGallery").onclick=function(){galleryMode=true;syncGalleryControls();render();};
+document.querySelectorAll("[data-filter]").forEach(function(button){
+  button.onclick=function(){galleryMode=true;galleryFilter=button.getAttribute("data-filter");syncGalleryControls();render();};
+});
 g("fi").onchange=function(e){enqueue(e.target.files);e.target.value="";};
 g("bMk").onclick=function(){var n=prompt("اسم المجلد الجديد");if(n)api("/api/mkdir",{path:cur,name:n}).then(function(){load(cur);}).catch(function(e){toast(e.message);});};
-g("bAll").onclick=function(){var any=selKeys().length>0;sel={};if(!any)view().forEach(function(i){sel[join(cur,i.name)]=true;});render();};
+g("bAll").onclick=function(){var any=selKeys().length>0;sel={};if(!any)visibleItems().forEach(function(i){sel[join(cur,i.name)]=true;});render();};
 g("bZip").onclick=function(){zip(selKeys());};
 g("bDel").onclick=function(){remove(selKeys());};
 g("q").oninput=render;g("sort").onchange=render;
@@ -322,7 +406,7 @@ window.addEventListener("dragenter",function(e){e.preventDefault();depth++;if(in
 window.addEventListener("dragleave",function(e){e.preventDefault();depth=Math.max(0,depth-1);if(!depth)g("drop").hidden=true;});
 window.addEventListener("dragover",function(e){e.preventDefault();});
 window.addEventListener("drop",function(e){e.preventDefault();depth=0;g("drop").hidden=true;if(e.dataTransfer&&e.dataTransfer.files.length)enqueue(e.dataTransfer.files);});
-loadInfo();load("");
+syncGalleryControls();loadInfo();load("");
 })();
 </script></body></html>"""
 }
