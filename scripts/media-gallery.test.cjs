@@ -24,6 +24,19 @@ function extractDeclaration(name) {
   throw new Error(`Unclosed ${name} declaration`);
 }
 
+
+function getFormatHelpers() {
+  const formatMap = source.match(/var FILE_FORMATS=\{[\s\S]*?\n\};/);
+  assert.ok(formatMap, "Missing file-format icon map");
+  const code = [
+    formatMap[0],
+    extractDeclaration("ext"),
+    extractDeclaration("formatInfo"),
+    "({ formatInfo })",
+  ].join("\n");
+  return vm.runInNewContext(code);
+}
+
 function getGalleryHelpers() {
   const typeMap = source.match(/var T=\{[^\n]*\};/);
   assert.ok(typeMap, "Missing browser media type map");
@@ -76,4 +89,17 @@ test("gallery filters include only matching media and apps", () => {
   assert.equal(matchesGalleryFilter({ name: "photo.png" }, "image"), true);
   assert.equal(matchesGalleryFilter({ name: "photo.png" }, "video"), false);
   assert.equal(matchesGalleryFilter({ name: "tool.apk" }, "app"), true);
+});
+
+test("file list assigns format icons and visible badges across common and unknown extensions", () => {
+  const { formatInfo } = getFormatHelpers();
+  const plain = (value) => JSON.parse(JSON.stringify(value));
+  assert.deepEqual(plain(formatInfo("photo.JPG")), { path: "image", label: "صورة JPEG", badge: "JPG" });
+  assert.deepEqual(plain(formatInfo("archive.zip")), { path: "archive", label: "أرشيف ZIP", badge: "ZIP" });
+  assert.deepEqual(plain(formatInfo("page.html")), { path: "code", label: "ملف HTML", badge: "HTML" });
+  assert.deepEqual(plain(formatInfo("bundle.js")), { path: "code", label: "ملف JavaScript", badge: "JS" });
+  assert.deepEqual(plain(formatInfo("data.cas")), { path: "file", label: "ملف CAS", badge: "CAS" });
+  assert.deepEqual(plain(formatInfo("unknown.abcxyz123")), { path: "file", label: "ملف ABCXYZ123", badge: "ABCXYZ" });
+  assert.deepEqual(plain(formatInfo("README")), { path: "file", label: "ملف دون امتداد", badge: "" });
+  assert.match(source, /el\("span","formatBadge",mark\.badge\)/);
 });
